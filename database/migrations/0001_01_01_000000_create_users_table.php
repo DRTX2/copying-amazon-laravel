@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('phone_number');
+            $table->string('email')->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password',20);
+            $table->decimal('balance',10,4);
             $table->rememberToken();
             $table->timestamps();
+            //forany key
+            $table->unsignedTinyInteger('type_user_id')->index();
+            $table->foreign('type_user_id')->references('id')->on('type_users')->onDelete('restrict');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
